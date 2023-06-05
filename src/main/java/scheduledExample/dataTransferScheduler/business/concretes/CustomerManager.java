@@ -23,6 +23,7 @@ public class CustomerManager implements CustomerService {
         List<GetAllCustomersResponse> getAllCustomersResponses =
                 customers.stream().map(customer -> new GetAllCustomersResponse(
                         customer.getId(),
+                        customer.getTckn(),
                         customer.getName(),
                         customer.getSurname(),
                         customer.getAddress()

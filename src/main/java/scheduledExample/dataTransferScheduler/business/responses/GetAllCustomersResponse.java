@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GetAllCustomersResponse {
     private int id;
+    private String tckn;
     private String name;
     private String surname;
     private String address;
