@@ -1,7 +1,5 @@
 package scheduledExample.dataTransferScheduler.business.dto.converter;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.stereotype.Component;
 import scheduledExample.dataTransferScheduler.business.dto.CustomerDto;
 import scheduledExample.dataTransferScheduler.entities.Customer;
@@ -14,7 +12,8 @@ public class CustomerDtoConverter {
                 customer.getTckn(),
                 customer.getName(),
                 customer.getSurname(),
-                customer.getAddress()
+                customer.getAddress(),
+                customer.getVersionNumber()
         );
         //throw new RuntimeException("deneme hatası");
     }
