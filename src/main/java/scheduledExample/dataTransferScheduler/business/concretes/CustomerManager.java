@@ -10,7 +10,6 @@ import scheduledExample.dataTransferScheduler.dataAccess.CustomerRepository;
 import scheduledExample.dataTransferScheduler.entities.Customer;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerManager implements CustomerService {
@@ -39,5 +38,9 @@ public class CustomerManager implements CustomerService {
             logger.error("An error occurred while listing: " + exception.getMessage());
         }
         return null;
+    }
+
+    private List<Customer> getAllCustomerWithTckn(String tckn) {
+        return customerRepository.findByTcknEquals(tckn);
     }
 }
