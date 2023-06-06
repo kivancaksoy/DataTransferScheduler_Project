@@ -1,11 +1,11 @@
-package scheduledExample.dataTransferScheduler.business.responses;
+package scheduledExample.dataTransferScheduler.business.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GetAllCustomersResponse {
+public class CustomerDto {
     private int id;
     private String tckn;
     private String name;

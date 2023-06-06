@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import scheduledExample.dataTransferScheduler.business.abstracts.CustomerService;
-import scheduledExample.dataTransferScheduler.business.responses.GetAllCustomersResponse;
+import scheduledExample.dataTransferScheduler.business.dto.CustomerDto;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class CustomerController {
     }
 
     @GetMapping("/getAllCustomer")
-    public ResponseEntity<List<GetAllCustomersResponse>> getAllCustomer() {
+    public ResponseEntity<List<CustomerDto>> getAllCustomer() {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 }
