@@ -2,6 +2,7 @@ package scheduledExample.dataTransferScheduler.business.concretes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import scheduledExample.dataTransferScheduler.business.abstracts.CustomerService;
@@ -10,6 +11,7 @@ import scheduledExample.dataTransferScheduler.business.dto.converter.CustomerDto
 import scheduledExample.dataTransferScheduler.business.services.helpers.WebClientHelper;
 import scheduledExample.dataTransferScheduler.dataAccess.CustomerRepository;
 import scheduledExample.dataTransferScheduler.entities.Customer;
+import scheduledExample.dataTransferScheduler.utilities.customConfigurations.CustomConfigurationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +23,15 @@ public class CustomerManager implements CustomerService {
     private final CustomerDtoConverter customerDtoConverter;
     private final Logger logger = LoggerFactory.getLogger(CustomerManager.class);
     private final WebClientHelper webClientHelper;
+    private final CustomConfigurationService customConfigurationService;
 
     public CustomerManager(CustomerRepository customerRepository,
                            CustomerDtoConverter customerDtoConverter,
-                           WebClientHelper webClientHelper) {
+                           WebClientHelper webClientHelper, CustomConfigurationService customConfigurationService) {
         this.customerRepository = customerRepository;
         this.customerDtoConverter = customerDtoConverter;
         this.webClientHelper = webClientHelper;
+        this.customConfigurationService = customConfigurationService;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class CustomerManager implements CustomerService {
         return getAllCustomerDto(customers);
     }
 
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "#{@customConfigurationService.getCronValue()}")
     @Override
     public void getAllCustomerFromBase() {
         int version = getVersionNumber();
@@ -80,7 +84,7 @@ public class CustomerManager implements CustomerService {
     }
 
     private int getVersionNumber() {
-        return 3;
+        return Integer.parseInt(customConfigurationService.getVersionNumberValue());
     }
 
 
