@@ -37,7 +37,8 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public Flux<Customer> getAllCustomerFromBase(int version) {
+    public Flux<Customer> getAllCustomerFromBase() {
+        int version = getMaxVersionNumber();
         customerOperation(
                 Objects.requireNonNull(
                         webClientHelper
@@ -76,6 +77,10 @@ public class CustomerManager implements CustomerService {
         }
         customerRepository.saveAll(customerList);
         logger.info("Customers operation executed.");
+    }
+
+    private int getMaxVersionNumber(){
+        return customerRepository.findMaxVersionNumber();
     }
 
 

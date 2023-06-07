@@ -26,8 +26,8 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 
-    @GetMapping("/getAllCustomerFromBase")
+/*    @GetMapping("/getAllCustomerFromBase")
     public ResponseEntity<Flux<Customer>> getAllCustomerFromBase(@RequestParam("version") int version) {
         return ResponseEntity.ok(customerService.getAllCustomerFromBase(version));
-    }
+    }*/
 }
