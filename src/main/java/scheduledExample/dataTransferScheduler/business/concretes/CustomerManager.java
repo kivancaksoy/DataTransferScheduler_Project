@@ -38,11 +38,11 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public Flux<Customer> getAllCustomerFromBase(int version) {
-        addCustomersIfNotExist(
+        customerOperation(
                 Objects.requireNonNull(
                         webClientHelper
                                 .getAllCustomerWithVersion(version)
-                                .collectList().block()));
+                                .collectList().block()), version);
         logger.info("getAllCustomerFromBase executed.");
         return webClientHelper.getAllCustomerWithVersion(version);
     }
@@ -59,7 +59,27 @@ public class CustomerManager implements CustomerService {
         return null;
     }
 
-    private void addCustomersIfNotExist(List<Customer> customers) {
+
+    private void customerOperation(List<Customer> customers, int versionNumber) {
+        List<Customer> customerList = new ArrayList<>();
+        for (Customer customer : customers) {
+            if (customerRepository.findByTcknEqualsAndVersionNumberLessThan(customer.getTckn(), versionNumber) != null) {
+                customer.setId(customerRepository.findByTcknEquals(customer.getTckn()).getId());
+                customerList.add(customer);
+                logger.info("Customer will update: " + customer.getName());
+            }
+
+            if (customerRepository.findByTcknEquals(customer.getTckn()) == null) {
+                customerList.add(customer);
+                logger.info("Customer will add: " + customer.getName());
+            }
+        }
+        customerRepository.saveAll(customerList);
+        logger.info("Customers operation executed.");
+    }
+
+
+    /*private void addCustomersIfNotExist(List<Customer> customers) {
         List<Customer> customerList = new ArrayList<>();
         for (Customer customer : customers) {
             if (customerRepository.findByTcknEquals(customer.getTckn()) == null) {
@@ -69,4 +89,17 @@ public class CustomerManager implements CustomerService {
         customerRepository.saveAll(customerList);
         logger.info("Customers added.");
     }
+
+    private void updateCustomersIfExist(List<Customer> customers, int versionNumber) {
+        List<Customer> customerList = new ArrayList<>();
+        for (Customer customer : customers) {
+            if (customerRepository.findByTcknEqualsAndVersionNumberLessThan(customer.getTckn(), versionNumber) != null) {
+                customer.setId(customerRepository.findByTcknEquals(customer.getTckn()).getId());
+                customerList.add(customer);
+            }
+        }
+        customerRepository.saveAll(customerList);
+        logger.info("Customers updated.");
+    }*/
+
 }
