@@ -10,8 +10,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Customer findByTcknEquals(String tckn);
     Customer findByTcknEqualsAndVersionNumberLessThan(String tckn, int versionNumber);
 
-    @Query("SELECT MAX(c.versionNumber) FROM Customer c")
-    Integer findMaxVersionNumber();
+/*    @Query("SELECT MAX(c.versionNumber) FROM Customer c")
+    Integer findMaxVersionNumber();*/
 
 
 }

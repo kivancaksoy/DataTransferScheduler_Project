@@ -2,8 +2,8 @@ package scheduledExample.dataTransferScheduler.business.concretes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import scheduledExample.dataTransferScheduler.business.abstracts.CustomerService;
 import scheduledExample.dataTransferScheduler.business.dto.CustomerDto;
 import scheduledExample.dataTransferScheduler.business.dto.converter.CustomerDtoConverter;
@@ -36,16 +36,16 @@ public class CustomerManager implements CustomerService {
         return getAllCustomerDto(customers);
     }
 
+    @Scheduled(cron = "0/30 * * * * *")
     @Override
-    public Flux<Customer> getAllCustomerFromBase() {
-        int version = getMaxVersionNumber();
+    public void getAllCustomerFromBase() {
+        int version = getVersionNumber();
         customerOperation(
                 Objects.requireNonNull(
                         webClientHelper
                                 .getAllCustomerWithVersion(version)
                                 .collectList().block()), version);
         logger.info("getAllCustomerFromBase executed.");
-        return webClientHelper.getAllCustomerWithVersion(version);
     }
 
     private List<CustomerDto> getAllCustomerDto(List<Customer> customers) {
@@ -79,8 +79,8 @@ public class CustomerManager implements CustomerService {
         logger.info("Customers operation executed.");
     }
 
-    private int getMaxVersionNumber(){
-        return customerRepository.findMaxVersionNumber();
+    private int getVersionNumber() {
+        return 3;
     }
 
 

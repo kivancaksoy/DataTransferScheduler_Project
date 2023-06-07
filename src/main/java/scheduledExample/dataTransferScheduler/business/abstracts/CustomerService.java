@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CustomerService {
     List<CustomerDto> getAllCustomer();
-    public Flux<Customer> getAllCustomerFromBase();
+    void getAllCustomerFromBase();
 }
