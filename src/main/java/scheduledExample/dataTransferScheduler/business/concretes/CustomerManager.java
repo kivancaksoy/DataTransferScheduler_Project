@@ -53,6 +53,16 @@ public class CustomerManager implements CustomerService {
         logger.info("getAllCustomerFromBase executed.");
     }
 
+    @Override
+    public CustomerDto getCustomerByTckn(String tckn) {
+        Customer customer = customerRepository.findByTcknEquals(tckn);
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer could not find by tckn: " + tckn);
+        }
+        logger.info("Customer listed by tckn: " + tckn);
+        return customerDtoConverter.convertToCustomerDto(customer);
+    }
+
     private List<CustomerDto> getAllCustomerDto(List<Customer> customers) {
         try {
             List<CustomerDto> customerDtos =
