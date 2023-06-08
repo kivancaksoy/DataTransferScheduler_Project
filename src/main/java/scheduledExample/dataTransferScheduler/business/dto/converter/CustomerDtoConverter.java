@@ -15,6 +15,6 @@ public class CustomerDtoConverter {
                 customer.getAddress(),
                 customer.getVersionNumber()
         );
-        //throw new RuntimeException("deneme hatası");
+        //throw new RuntimeException("CustomerDTO hatası.");
     }
 }

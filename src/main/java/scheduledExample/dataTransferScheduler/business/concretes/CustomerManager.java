@@ -11,6 +11,7 @@ import scheduledExample.dataTransferScheduler.business.dto.converter.CustomerDto
 import scheduledExample.dataTransferScheduler.business.services.helpers.WebClientHelper;
 import scheduledExample.dataTransferScheduler.dataAccess.CustomerRepository;
 import scheduledExample.dataTransferScheduler.entities.Customer;
+import scheduledExample.dataTransferScheduler.exceptions.CustomerNotFoundException;
 import scheduledExample.dataTransferScheduler.utilities.customConfigurations.CustomConfigurationService;
 
 import java.util.ArrayList;
@@ -60,8 +61,8 @@ public class CustomerManager implements CustomerService {
             return customerDtos;
         } catch (Exception exception) {
             logger.error("An error occurred while listing: " + exception.getMessage());
+            return null;
         }
-        return null;
     }
 
 
